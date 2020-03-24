@@ -5,7 +5,11 @@ function AddCounterForm(props) {
     const [name, setName] = useState('---');
     const [count, setCount] = useState(456);
 
-
+    const onSubmit = () => {
+        props.onSubmit(name, count)
+        setName('')
+        setCount(0)
+    };
 
     return (
         <div >
@@ -15,7 +19,7 @@ function AddCounterForm(props) {
             <input type="number" name='count' value={count}
                    onChange={e => setCount(e.target.value)} />
 
-            <button class="btn btn-primary" onClick={() => props.onSubmit(name, count)}>Add</button>
+            <button class="btn btn-primary" onClick={onSubmit}>Add</button>
 
 
         </div>

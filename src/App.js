@@ -2,17 +2,20 @@ import React, {useState} from 'react';
 import './App.css';
 import Counters from "./Counters";
 import AddCounterForm from "./AddCounterForm";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import ConfirmationDelete from "./ConfirmationDelete";
 
 function App() {
 
     const InitialCountersState = [
-        {id: 123, name: 'Counter 1', count: 2},
-        {id: 234, name: 'Counter 2', count: 5},
-        {id: 345, name: 'Counter 3', count: 8},
-        {id: 456, name: 'Counter 4', count: 48},
+        {id: 123, name: '1', count: 2},
+        {id: 234, name: '2', count: 5},
+        {id: 345, name: '3', count: 8},
+        {id: 456, name: '4', count: 48},
     ];
 
     const [counters, setCounters] = useState(InitialCountersState);
+    const [confirmCounter, setConfirmCounter] = useState({});
 
     function resetTotalCount() {
         const newCounters = counters.map(el => ({...el, count: 0}));
@@ -32,11 +35,22 @@ function App() {
 
     }
 
-    function removeCounter(id) {
-        const newCounters = counters.filter(el => el.id !== id);
+    function removeConfirmed() {
+        const newCounters = counters.filter(el => el.id !== confirmCounter.id);
         setCounters(newCounters);
+        setConfirmCounter({})
 
     }
+
+    function confirmRemoveCounter(counter) {
+        setConfirmCounter(counter);
+
+    }
+
+    function confirmDeleteCancel(counter) {
+        setConfirmCounter({});
+    }
+
 
     function addCounter(name, count) {
 
@@ -59,10 +73,11 @@ function App() {
 
             {
                 counters.map(el => <Counters
-                key={el.id} id={el.id} name={el.name} count={el.count}
+                key={el.id}
+                counter={el}
                 increment={incrementCounter}
                 decrement={decrementCounter}
-                remove={removeCounter}
+                remove={confirmRemoveCounter}
 
 
             />)
@@ -71,7 +86,17 @@ function App() {
 
             <AddCounterForm onSubmit={addCounter}/>
 
+            <Button color="primary">primary</Button>{' '}
+
+
+            <ConfirmationDelete
+                name={confirmCounter.name}
+                onSuccess={removeConfirmed}
+                onCancel={confirmDeleteCancel}
+            />
+
         </div>
+
     );
 }
 

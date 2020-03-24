@@ -10,22 +10,22 @@ function Counters(props) {
                 <div className="row">
 
                     <div className="col">
-                        ID {props.id}
+                        ID {counter.id}
                     </div>
                     <div className="col">
-                        Counter name {props.name}
-                    </div>
-
-                    <div className="col">
-                    <button className="btn btn-secondary" onClick={() => props.decrement(props.id)}>-</button>
-
-                    <strong>{props.count}</strong>
-
-                    <button className="btn btn-secondary" onClick={() => props.increment(props.id)}>+</button>
+                        Counter name {counter.name}
                     </div>
 
                     <div className="col">
-                    <button className="btn btn-danger" onClick={() => props.remove(props.id)}>Delete
+                    <button className="btn btn-secondary" onClick={() => decrement(counter.id)}>-</button>
+
+                    <strong>{counter.count}</strong>
+
+                    <button className="btn btn-secondary" onClick={() => increment(counter.id)}>+</button>
+                    </div>
+
+                    <div className="col">
+                    <button className="btn btn-danger" onClick={() => remove(counter)}>Delete
                     </button>
                     </div>
 
